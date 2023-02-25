@@ -1,0 +1,17 @@
+{
+    "extends": "@tsconfig/recommended",
+    "compilerOptions": {
+      "outDir": "./dist",
+      "rootDir": "./src"
+    },
+    "exclude": [
+    //   "coverage",
+    //   "test",
+    //   "dist",
+      "vitest.config.ts",
+    //   "example",
+    //   "load-test",
+    //   "__mocks__",
+    //   "docs"
+    ]
+  }
