@@ -9,7 +9,7 @@ import type { AddressInfo } from "net";
 import { TestClient } from "./utils/test-client";
 
 describe("token", () => {
-    
+
     let redis: StartedTestContainer;
     let server: Server;
     let testClient: TestClient;
@@ -21,6 +21,8 @@ describe("token", () => {
         redis = await new GenericContainer("redis")
             .withExposedPorts(6379)
             .start();
+
+        process.env.REDIS_PORT = `${redis.getMappedPort(6379)}`
 
         server = await new DoormanServer().start();
 

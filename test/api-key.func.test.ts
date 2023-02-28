@@ -20,6 +20,8 @@ describe("API key", () => {
             .withExposedPorts(6379)
             .start();
 
+        process.env.REDIS_PORT = `${redis.getMappedPort(6379)}`
+
         server = await new DoormanServer().start();
 
         testClient = new TestClient(`http://localhost:${(server.address() as AddressInfo).port}`);
