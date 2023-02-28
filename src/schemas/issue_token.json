@@ -1,0 +1,24 @@
+{
+    "type": "object",
+    "required": [
+        "permissions"
+    ],
+    "properties": {
+        "expiresIn": {
+            "type": "string"
+        },
+        "user": {
+            "type": "object",
+            "additionalProperties": true,
+            "nullable": true
+        },
+        "permissions": {
+            "type": "array",
+            "items": {
+                "type": "string"
+            },
+            "minItems": 1
+        }
+    },
+    "additionalProperties": false
+}

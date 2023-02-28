@@ -1,0 +1,12 @@
+{
+    "type": "object",
+    "properties": {
+        "apiKey": {
+            "type": "string",
+            "nullable": false
+        }
+    },
+    "required": [
+        "apiKey"
+    ]
+}

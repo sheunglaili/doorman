@@ -1,0 +1,5 @@
+permissions:
+  - id: admin:test-permission
+    children:
+      - write:test-permission
+      - read:test-permission
