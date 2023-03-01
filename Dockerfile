@@ -18,6 +18,9 @@ COPY package-lock.json ./
 RUN npm install --omit=dev
 COPY --from=builder /usr/doorman/dist .
 
+RUN cd /etc && mkdir doorman
+RUN chmod 777 /etc/doorman
+
 EXPOSE 8080 
 
 CMD ["npm", "run", "start"]

@@ -4,6 +4,7 @@
   "description": "Authentication Server for Bagman",
   "main": "index.js",
   "scripts": {
+    "build": "tsc -p .",
     "debug": "DEBUG =* npm run dev",
     "dev": "npx ts-node ./src/index.ts",
     "start": "node ./index.js",
