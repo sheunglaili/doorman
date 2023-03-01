@@ -67,4 +67,4 @@ describe("API key", () => {
         const { msg } = await verificationRespBody.json();
         expect(msg).toEqual("invalid API Key: Revoked");
     })
-})
+}, 30000)

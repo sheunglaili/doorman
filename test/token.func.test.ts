@@ -1,5 +1,6 @@
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { resolve } from "path";
+import jwt, { JwtPayload } from "jsonwebtoken";
 
 import { GenericContainer, StartedTestContainer } from "testcontainers";
 import { DoormanServer } from "../src/server";
@@ -81,5 +82,25 @@ describe("token", () => {
         const { statusCode } = await testClient.verifyTokenOrAPIKey(token);
 
         expect(statusCode).toEqual(200);
+    });
+
+    it('should be able encode user data in token claims', async () => {
+        const { body: createAPIKeyRespBody } = await testClient.requestAPIKey(['issue:api_token']);
+        const { apiKey } = await createAPIKeyRespBody.json();
+        
+        const userinfo = { username: 'username' };
+        const { body: issueTokenRespBody } = await testClient.issueToken(apiKey, ['write:test-permission'], userinfo);
+        
+        const { token } = await issueTokenRespBody.json();
+
+        const claims = jwt.decode(token.substring(3)) as JwtPayload;
+
+        expect(claims.user).toEqual(userinfo);
     })
-})
+
+    it('should reject malform string', async () => {
+        const { statusCode } = await testClient.verifyTokenOrAPIKey("malformed string");
+
+        expect(statusCode).toEqual(401);
+    })
+}, 30000)
