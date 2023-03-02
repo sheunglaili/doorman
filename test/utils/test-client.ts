@@ -29,7 +29,7 @@ export class TestClient {
 
     async verifyTokenOrAPIKey(keystring: string) {
         return request(`${this.url}/token/verify`, {
-            method: 'POST',
+            method: 'GET',
             headers: {
                 'x-api-key': keystring
             }

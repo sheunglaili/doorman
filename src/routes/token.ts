@@ -35,7 +35,7 @@ export function createTokenRouter(ctx: DoormanContext) {
         });
     });
 
-    router.post("/verify", auth.validToken(), (req, res) => {
+    router.get("/verify", auth.validToken(), (req, res) => {
         // only valid token will reach here
         res.status(200).send();
     });
