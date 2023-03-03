@@ -1,7 +1,7 @@
 import { resolve } from "path";
 
 import express from "express";
-import dotenv from "dotenv";
+import pino from "pino-http";
 
 import { createTokenRouter } from "./routes/token";
 import { createAPIKeyRouter } from "./routes/api-key";
@@ -52,6 +52,7 @@ export class DoormanServer {
 
         const app = express();
 
+        app.use(pino())
         app.use(express.json());
         app.use('/token', createTokenRouter(ctx));
         app.use('/api-key', createAPIKeyRouter(ctx));
