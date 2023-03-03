@@ -23,9 +23,13 @@ export function createAPIKeyRouter(ctx: DoormanContext) {
 
         const { expiresIn = config.jwt['api_key_timeout'], ...payload } = req.body;
 
+        // if api key doesn't contains issue:api_token permission 
+        // it will be publishable
+        const apiKeyType = payload.permissions.includes('issue:api_token') ? 'sk' : 'pk';
+
         return res.json({
             // prefix with sk_ to indicate this is secret key
-            apiKey: `sk_${jwt.sign(payload, config.jwt.secret, {
+            apiKey: `${apiKeyType}_${jwt.sign(payload, config.jwt.secret, {
                 ...(expiresIn && { expiresIn }) // workaround for passing undefined expiresIn will throw error
             })}`
         })

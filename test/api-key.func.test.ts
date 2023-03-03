@@ -33,6 +33,22 @@ describe("API key", () => {
         server.close();
     });
 
+    it("should create apiKey prefix with pk if not contains permission: issue:api_token", async () => {
+        const { body } = await testClient.requestAPIKey(['write:test-permission']);
+
+        const { apiKey } = await body.json();
+
+        expect(apiKey).toMatch(/^pk_/);
+    });
+
+    it("should create apiKey prefix with sk if contains permission: issue:api_token", async () => {
+        const { body } = await testClient.requestAPIKey(['issue:api_token']);
+
+        const { apiKey } = await body.json();
+
+        expect(apiKey).toMatch(/^sk_/);
+    });
+
     it("should create api key provided with basic authentication", async () => {
         const { statusCode, body } = await testClient.requestAPIKey(['write:test-permission']);
 
