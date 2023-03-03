@@ -52,11 +52,17 @@ export class DoormanServer {
 
         const app = express();
 
-        app.use(pino())
+        app.use(pino({
+            redact: ['req.headers.x-api-key']
+        }))
         app.use(express.json());
         app.use('/token', createTokenRouter(ctx));
         app.use('/api-key', createAPIKeyRouter(ctx));
+        // error handler
         app.use(createErrorHandler());
+        // not found handler 
+        app.use((req, res, next) => res.status(404).json({ msg: "Not found" }));
+        
 
         return app.listen(parseInt(process.env.PORT || "3000"));
     }
