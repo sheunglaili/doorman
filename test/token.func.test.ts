@@ -47,6 +47,11 @@ describe("token", () => {
         const { token } = await issueTokenRespBody.json();
 
         expect(token).not.empty;
+
+        const { user, permissions } = jwt.decode(token.substring(3)) as JwtPayload;
+        
+        expect(user).toEqual({});
+        expect(permissions).toEqual(['write:test-permission']);
     });
 
     it('should not be able to issue token with issue:api_token permission', async () => {

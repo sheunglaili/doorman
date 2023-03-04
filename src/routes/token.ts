@@ -24,7 +24,7 @@ export function createTokenRouter(ctx: DoormanContext) {
 
         // sign the token with provided api key
         const token = jwt.sign({
-            permissions,
+            permissions: requestPermissions,
             ...payload
         }, config.jwt.secret, { expiresIn });
 
