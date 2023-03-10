@@ -53,7 +53,16 @@ export class DoormanServer {
         const app = express();
 
         app.use(pino({
-            redact: ['req.headers["x-api-key"]']
+            redact: ['req.query["apiKey"]'],
+            serializers: {
+                req(req) {
+                  const [ path ] = req.url.split("?")
+                  return {
+                    ...req,
+                    url: path
+                  }
+                }
+            }
         }))
         app.use(express.json());
         app.use('/token', createTokenRouter(ctx));

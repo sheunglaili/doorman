@@ -13,7 +13,7 @@ export class Authenticator {
   }
 
   private retrieveAPIKey(req: Request) {
-    const apiKey = req.headers['x-api-key'];
+    const apiKey = req.query['apiKey'];
     if (!apiKey || typeof apiKey !== "string") return;
 
     return this.sanitiseAPIKey(apiKey);

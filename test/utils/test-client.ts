@@ -27,11 +27,11 @@ export class TestClient {
         });
     }
 
-    async verifyTokenOrAPIKey(keystring: string) {
+    async verifyTokenOrAPIKey(apiKey: string) {
         return request(`${this.url}/token/verify`, {
             method: 'GET',
-            headers: {
-                'x-api-key': keystring
+            query: {
+                apiKey
             }
         })
     }
@@ -40,8 +40,10 @@ export class TestClient {
         return request(`${this.url}/token/issue`, {
             method: 'POST',
             headers: {
-                'x-api-key': apiKey,
                 'content-type': 'application/json'
+            },
+            query: {
+                apiKey,
             },
             body: JSON.stringify({
                 permissions,
